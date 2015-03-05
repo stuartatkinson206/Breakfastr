@@ -9,13 +9,14 @@
 <body>
 	<header>
 		<%= link_to "Breakfastr", root_path %>
-		<!-- #if logged in? -->
-			<%=link_to "Add a pastry", new_user_pastry_path(1) %>
-			<%#link_to "Log out", session_path, method: :delete %>
-		<!-- #Else -->
-			<%#link_to "Sign up", new_user_path  %>
-			<%#link_to "Log in", new_session_path  %>
-		<!-- end -->
+
+		<% if logged_in? %>
+			<%=link_to "Add a pastry", new_user_pastry_path(current_user) %>
+			<%=link_to "Log out", session_path, method: :delete %>
+		<% else %>
+			<%=link_to "Sign up", new_user_path  %>
+			<%=link_to "Log in", new_session_path  %>
+		<% end %>
 	</header>
 <!-- below provides consistent flash messages across views -->
 <!-- flash.each is a hash -->

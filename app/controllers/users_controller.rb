@@ -8,9 +8,11 @@ class UsersController < ApplicationController
   	
   	if @user.save
   		flash[:success] = "Thanks for signing up!"
-  	#log them in here
-    session[:user_id] = @user.id
-  	redirect_to root_path
+  	# reset as security measure
+      reset_session
+      #log them in here only if user id works
+      session[:user_id] = @user.id
+  	 redirect_to root_path
   	else
   		flash[:error] = "Try again"
   		render :new
