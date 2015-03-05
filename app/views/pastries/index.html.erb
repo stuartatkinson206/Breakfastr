@@ -2,7 +2,7 @@
 <section class="pastries">
 	<% @pastries.each do |pastry| %>
 		<div class="pastry">
-			<p><%= pastry[:name] %></p>
+			<p><%= link_to pastry[:name], pastry_path(pastry.id) %></p>
 			<p><%= pastry[:price_in_pence] %></p>
 		</div>
 	<% end %>
