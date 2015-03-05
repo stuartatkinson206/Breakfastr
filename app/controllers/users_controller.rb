@@ -4,11 +4,12 @@ class UsersController < ApplicationController
   end
 
   def create
-  	#@user = user.new(user_params)
-  	# password stuff here!!
+  	@user = User.new(user_params)
+  	
   	if @user.save
   		flash[:success] = "Thanks for signing up!"
   	#log them in here
+    session[:user_id] = @user.id
   	redirect_to root_path
   	else
   		flash[:error] = "Try again"
