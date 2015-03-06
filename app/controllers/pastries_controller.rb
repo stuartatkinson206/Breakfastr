@@ -4,7 +4,14 @@ class PastriesController < ApplicationController
   def index
   	# create array of hashes
   	# will become seed data for migration
-  	@pastries = Pastry.all
+    # allows a filter by user to see what the user has seen/loaded etc
+    if params[:user_id].present?
+      @user = User.find(params[user_id])
+      @pastries = @user.pastries
+    else
+  	 @pastries = Pastry.all
+    end
+
 				
   end
 
@@ -20,6 +27,7 @@ class PastriesController < ApplicationController
   end
 
   def create
+    @pastry = current_user.pastries.new(pastry_params)
   	@pastry = Pastry.new(pastry_params)
   	if @pastry.save
   		flash[:success] = "Pastry added!"
@@ -47,9 +55,9 @@ class PastriesController < ApplicationController
   end
 
   def destroy
-    @pastry = Pastry.find(params[:id])
-    @pastry.destroy
-    flash[:success] = "Pastry destroyed!!"
+    pastry = Pastry.find(params[:id])
+    pastry.destroy
+    flash[:success] = "You destroyed '#{pastry.name}', a perfectly good pastry."
       redirect_to root_path
   end
 

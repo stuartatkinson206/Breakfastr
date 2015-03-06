@@ -1,3 +1,24 @@
-<h1><%= @pastry.name %></h1>
-<p><%= @pastry.price_in_pence %></p>
-<%= link_to "Remove this from the bakery", pastry_path(@pastry), method: :delete %>
+<section class="pastry"	
+
+	<h1><%= @pastry.name %></h1>
+	<p>
+		<%= link_to new_pastry_order_path(@pastry) do %>
+
+			<%= number_to_currency(@pastry.price_in_pence .to_f / 100, unit:"£") %>
+		<% end %>
+	</p>
+
+	<p>By <%= @pastry.user.username %></p>
+
+	<% if logged_in? %>
+
+
+		<div class="actions">
+
+			<%= link_to "Edit", edit_pastry_path(@pastry) %>
+			<%= link_to "Remove this from the bakery", pastry_path(@pastry), method: :delete %>
+		</div>
+
+	<% end %>
+
+</section>
