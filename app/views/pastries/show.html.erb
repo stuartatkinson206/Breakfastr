@@ -10,7 +10,7 @@
 
 	<p>By <%= @pastry.user.username %></p>
 
-	<% if logged_in? %>
+	<% if logged_in? and current_user.owns(@pastry) %>
 
 
 		<div class="actions">

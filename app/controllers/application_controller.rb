@@ -20,4 +20,11 @@ class ApplicationController < ActionController::Base
   		redirect_to new_session_path
   	end
   end
+
+  def require_owner
+   unless current_user.owns(@pastry)
+      flash[:error] = "You must be the authorised baker to do this!"
+      redirect_to root_path
+    end
+  end
 end

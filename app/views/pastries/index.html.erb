@@ -2,8 +2,11 @@
 <section class="pastries">
 	<% @pastries.each do |pastry| %>
 		<div class="pastry">
+
+			<!-- need to set up in public folders, the folder path /images/style/missing -->
+			<%= image_tag pastry.image.url(:medium) %>
 			<p><%= link_to pastry[:name], pastry_path(pastry.id) %></p>
-			<p><%= pastry[:price_in_pence] %></p>
+			<p><%= number_to_currency(pastry.price_in_pence.to_f / 100, unit:"£") %></p>
 		</div>
 	<% end %>
 

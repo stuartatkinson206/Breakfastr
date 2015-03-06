@@ -1,5 +1,8 @@
 class PastriesController < ApplicationController
+  before_action :find_pastry, except: [:index, :new, :create, :destroy]
   before_action :require_user, except: [:index, :show]
+  before_action :require_owner, only: [:edit, :update, :destroy]
+
 
   def index
   	# create array of hashes
@@ -16,7 +19,7 @@ class PastriesController < ApplicationController
   end
 
   def show
-  	@pastry = Pastry.find(params[:id])
+  	#@pastry = Pastry.find(params[:id])
 	
 
   end
@@ -39,12 +42,15 @@ class PastriesController < ApplicationController
   end
 
   def edit
-    @pastry = Pastry.find(params[:id])
+
+    #@pastry = Pastry.find(params[:id])
+
+     end
 
   end
 
   def update
-    @pastry = Pastry.find(params[:id])
+    #@pastry = Pastry.find(params[:id])
     if @pastry.update(pastry_params)
       flash[:success] = "Pastry updated"
       redirect_to pastry_path(@pastry)
@@ -63,7 +69,10 @@ class PastriesController < ApplicationController
 
 	private
 	def pastry_params
-		params.require(:pastry).permit(:name, :price_in_pence, :description)
+		params.require(:pastry).permit(:name, :price_in_pence, :description, :image)
 	end
+  def find_pastry
+    @pastry = Pastry.find(params[:id])
+  end
 
-end
+
